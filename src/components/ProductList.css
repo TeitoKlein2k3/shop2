@@ -1,0 +1,141 @@
+body {
+  margin: 0;
+  padding-top: 70px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;  
+  font-size: 40px;
+  margin-top: 20px;
+  font-family: sans-serif;
+  letter-spacing: 0.1rem;
+  font-weight: 600;
+}
+
+.product-grid-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  list-style-type: none;
+  padding: 0;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.2s;
+  position: relative;
+}
+
+
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+}
+
+.product-image {
+  width: 180px;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  margin-top: -80px;
+  border-radius: 5px;
+  transition: transform 0.2s;
+  box-shadow: 0 3px #9d174d;
+}
+
+.product-item:hover .product-image {
+  transform: scale(1.1);
+}
+
+.product-name {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  letter-spacing: 0.1rem;
+  font-style: san-serif !important;
+}
+
+.product-price-cart {
+  position: absolute;   
+  bottom: 10px; 
+  right:0px;
+  left: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 28px;
+}
+
+.add-to-cart-image {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin-right: 40px;
+}
+
+.add-to-cart-image:hover {
+  transform: scale(1.2);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px 0;
+}
+
+.pagination button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  font-size: 16px;
+}
+
+.loading-animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-size: 24px;
+}
