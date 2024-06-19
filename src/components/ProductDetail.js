@@ -15,7 +15,7 @@ const ProductDetail = () => {
     category: '',
     price: '',
     image: '',
-    quantity: '',
+    quantity: 0,
   });
   const dispatch = useDispatch();
 
@@ -44,7 +44,11 @@ const ProductDetail = () => {
         name: product.name,
         category: product.category,
         image: product.image,
-        quantity: product.quantity,
+        quantity: 1,
+      }));
+      setProduct(prevProduct => ({
+        ...prevProduct,
+        quantity: prevProduct.quantity - 1,
       }));
       toast.success(`${product.name} added to cart!`, {
         position: "top-right",
