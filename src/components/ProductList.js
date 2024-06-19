@@ -53,24 +53,36 @@ const ProductList = ({ incrementCartCount }) => {
   const handleAddToCart = (productId) => {
     const selectedProduct = products.find(product => product._id === productId);
     if (selectedProduct) {
-      dispatch(addItemToCart({
-        brand: selectedProduct.brand,
-        id: selectedProduct._id,
-        price: selectedProduct.price,
-        name: selectedProduct.name,
-        category: selectedProduct.category,
-        image: selectedProduct.image,
-      }));
-      incrementCartCount();
-      toast.success(`${selectedProduct.name} added to cart!`, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
+      if (selectedProduct.quantity > 0) {
+        dispatch(addItemToCart({
+          brand: selectedProduct.brand,
+          id: selectedProduct._id,
+          price: selectedProduct.price,
+          name: selectedProduct.name,
+          category: selectedProduct.category,
+          image: selectedProduct.image,
+        }));
+        incrementCartCount();
+        toast.success(`${selectedProduct.name} added to cart!`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        toast.error(`${selectedProduct.name} is out of stock!`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     } else {
       console.error(`Product with ID ${productId} not found`);
     }
