@@ -46,7 +46,6 @@ h1 {
   position: relative;
 }
 
-
 .product-link {
   text-decoration: none;
   color: inherit;
@@ -109,23 +108,31 @@ h1 {
 }
 
 .pagination button {
-  background-color: #007bff;
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: #007bff;
+  border: 1px solid #007bff;
   padding: 10px 20px;
   margin: 0 5px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #007bff;
+  color: white;
 }
 
 .pagination button:disabled {
   background-color: #cccccc;
+  color: white;
   cursor: not-allowed;
 }
 
-.pagination button:hover:not(:disabled) {
-  background-color: #0056b3;
+.pagination .active {
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
 }
 
 .pagination span {
