@@ -83,6 +83,7 @@ const ProductDetail = () => {
         <p className="product-description">"{product.description}"</p>
         <p className="product-category">Category: {product.category}</p>
         <p className="product-quantity">Quantity: {product.quantity}</p>
+        {product.quantity === 0 && <p className="out-of-stock">Out of Stock</p>}
         <Link to="/" className="go-home-link">
           Go Home
         </Link>
