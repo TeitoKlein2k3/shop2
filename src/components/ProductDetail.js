@@ -32,7 +32,7 @@ const ProductDetail = () => {
           price: data.data.price,
           image: data.data.image,
           quantity: data.data.quantity,
-          id: data.data._id  // Ensure you are using the correct ID
+          id: data.data._id 
         });
       });
   }, [id]);
