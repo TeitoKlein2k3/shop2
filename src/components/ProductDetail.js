@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addItemToCart } from '../store/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItemToCart, updateItemQuantity } from '../store/cartSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ProductDetail.css';
@@ -18,6 +18,7 @@ const ProductDetail = () => {
     quantity: 0,
   });
   const dispatch = useDispatch();
+  const cartItems = useSelector(state => state.cart.items);
 
   useEffect(() => {
     fetch(`https://api-exercise-sopi.vercel.app/api/v1/products/${id}`)
@@ -31,21 +32,27 @@ const ProductDetail = () => {
           price: data.data.price,
           image: data.data.image,
           quantity: data.data.quantity,
+          id: data.data._id  // Ensure you are using the correct ID
         });
       });
   }, [id]);
 
   const addToCartHandler = () => {
     if (product.quantity > 0) {
-      dispatch(addItemToCart({
-        brand: product.brand,
-        id: product._id,
-        price: product.price,
-        name: product.name,
-        category: product.category,
-        image: product.image,
-        quantity: 1,
-      }));
+      const existingCartItem = cartItems.find(item => item.id === product.id);
+      if (existingCartItem) {
+        dispatch(updateItemQuantity({ id: product.id, quantity: existingCartItem.quantity + 1 }));
+      } else {
+        dispatch(addItemToCart({
+          brand: product.brand,
+          id: product.id,
+          price: product.price,
+          name: product.name,
+          category: product.category,
+          image: product.image,
+          quantity: 1,
+        }));
+      }
       setProduct(prevProduct => ({
         ...prevProduct,
         quantity: prevProduct.quantity - 1,
