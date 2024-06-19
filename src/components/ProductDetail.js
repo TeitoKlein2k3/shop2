@@ -15,6 +15,7 @@ const ProductDetail = () => {
     category: '',
     price: '',
     image: '',
+    quantity: '',
   });
   const dispatch = useDispatch();
 
@@ -29,28 +30,42 @@ const ProductDetail = () => {
           category: data.data.category,
           price: data.data.price,
           image: data.data.image,
+          quantity: data.data.quantity,
         });
       });
   }, [id]);
 
   const addToCartHandler = () => {
-    dispatch(addItemToCart({
-      brand: product.brand,
-      id: product._id,
-      price: product.price,
-      name: product.name,
-      category: product.category,
-      image: product.image,
-    }));
-    toast.success(`${product.name} added to cart!`, {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    });
+    if (product.quantity > 0) {
+      dispatch(addItemToCart({
+        brand: product.brand,
+        id: product._id,
+        price: product.price,
+        name: product.name,
+        category: product.category,
+        image: product.image,
+        quantity: product.quantity,
+      }));
+      toast.success(`${product.name} added to cart!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.error(`${product.name} is out of stock!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   return (
@@ -63,6 +78,7 @@ const ProductDetail = () => {
         <h1 className="product-name">{product.name}</h1>
         <p className="product-description">"{product.description}"</p>
         <p className="product-category">Category: {product.category}</p>
+        <p className="product-quantity">Quantity: {product.quantity}</p>
         <Link to="/" className="go-home-link">
           Go Home
         </Link>
@@ -70,6 +86,7 @@ const ProductDetail = () => {
         <button
           onClick={addToCartHandler}
           className="add-to-cart-button"
+          disabled={product.quantity === 0}
         >
           Add to Cart
         </button>
