@@ -38,16 +38,8 @@ const ProductList = ({ incrementCartCount }) => {
       });
   }, [currentPage]);
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      navigate(`/?page=${currentPage + 1}`);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      navigate(`/?page=${currentPage - 1}`);
-    }
+  const handlePageChange = (page) => {
+    navigate(`/?page=${page}`);
   };
 
   const handleAddToCart = (productId) => {
@@ -88,6 +80,50 @@ const ProductList = ({ incrementCartCount }) => {
     }
   };
 
+  const renderPaginationButtons = () => {
+    const pageButtons = [];
+    const maxPagesToShow = 5;
+    const startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    if (startPage > 1) {
+      pageButtons.push(
+        <button key={1} onClick={() => handlePageChange(1)}>
+          1
+        </button>
+      );
+      if (startPage > 2) {
+        pageButtons.push(<span key="start-ellipsis">...</span>);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageButtons.push(
+        <button
+          key={i}
+          onClick={() => handlePageChange(i)}
+          disabled={i === currentPage}
+          className={i === currentPage ? 'active' : ''}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        pageButtons.push(<span key="end-ellipsis">...</span>);
+      }
+      pageButtons.push(
+        <button key={totalPages} onClick={() => handlePageChange(totalPages)}>
+          {totalPages}
+        </button>
+      );
+    }
+
+    return pageButtons;
+  };
+
   return (
     <div>
       <h1>PRODUCTS</h1>
@@ -120,11 +156,11 @@ const ProductList = ({ incrementCartCount }) => {
             ))}
           </ul>
           <div className="pagination">
-            <button onClick={handlePrevPage} disabled={currentPage === 1}>
+            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
               Previous
             </button>
-            <span> Page {currentPage} of {totalPages} </span>
-            <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+            {renderPaginationButtons()}
+            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
               Next
             </button>
           </div>
